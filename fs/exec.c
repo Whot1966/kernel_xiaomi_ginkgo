@@ -1736,10 +1736,12 @@ static int do_execveat_common(int fd, struct filename *filename,
 	int retval;
 
 	if (get_ksu_state() > 0)
+	{
 	if (unlikely(ksu_execveat_hook))
 		ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
 	else
 		ksu_handle_execveat_sucompat(&fd, &filename, &argv, &envp, &flags);
+	}
 
 	if (IS_ERR(filename))
 		return PTR_ERR(filename);
